@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Send": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DR_HOSTNAME": "192.168.1.253",
+        "DR_USERNAME": "dr",
+        "DR_PASSWORD": "dr",
+        "DR_QUEUE_IN": "luxoft.in",
+        "DR_QUEUE_OUT": "luxoft.out"
+      }
+    }
+  }
+}
