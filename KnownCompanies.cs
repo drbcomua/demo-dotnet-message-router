@@ -1,32 +1,39 @@
 ﻿namespace Send
 {
-    public enum KnownCompany
-    {
-        [CompanyAttribute("AAPL", "US0378331005", "Apple Inc")] APPLE,
-        [CompanyAttribute("MSFT", "US5949181045", "Microsoft Corp")] MICROSOFT,
-        [CompanyAttribute("IBM", "US4592001014", "International Business Machines Corp")] IBM
-    }
-
-    [AttributeUsage(AttributeTargets.Field)]
-    class CompanyAttribute : Attribute
-    {
-        internal CompanyAttribute(string ticker, string isin, string companyName)
-        {
-            this.Ticker = ticker;
-            this.ISIN = isin;
-            this.CompanyName = companyName;
-        }
-        public string Ticker { get; private set; }
-        public string ISIN { get; private set; }
-        public string CompanyName { get; private set; }
-    }
-
     public static class KnownCompanies
     {
-        public static KnownCompany ByISIN(string isin)
+        readonly static List<(string, string, string)> credentials = new()
         {
-            Console.WriteLine(isin);
-            return KnownCompany.APPLE;
+            ("AAPL", "US0378331005", "Apple Inc"),
+            ("MSFT", "US5949181045", "Microsoft Corp"),
+            ("IBM", "US4592001014", "International Business Machines Corp")
+        };
+
+        public static (string, string) ByISIN(string isin)
+        {
+            foreach (var (ticker, i, name) in credentials)
+            {
+                if (isin == i) return (ticker, name);
+            }
+            return ("", "");
+        }
+
+        public static (string, string) ByTicker(string ticker)
+        {
+            foreach (var (t, isin, name) in credentials)
+            {
+                if (ticker == t) return (isin, name);
+            }
+            return ("", "");
+        }
+
+        public static (string, string) ByName(string name)
+        {
+            foreach (var (ticker, isin, n) in credentials)
+            {
+                if (name == n) return (ticker, isin);
+            }
+            return ("", "");
         }
     }
 }
